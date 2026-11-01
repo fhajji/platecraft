@@ -8,6 +8,7 @@ relighting studio (beta).
 
 Full plan: https://claude.ai/artifact/C6WvyaZyS2aVVjvhdcRRVb
 Algorithms + filmmaker/Resolve/Sequencer guide: TECHNICAL.md (keep it in sync when behaviour changes).
+Regenerate TECHNICAL.pdf with `engine\envs\core\Scripts\python.exe tools\build_technical_pdf.py`.
 
 ## Target environment
 - Windows, NVIDIA RTX 3060 **12 GB VRAM**, 32 GB RAM. Every default must run on this.
@@ -41,6 +42,7 @@ engine/                     # self-contained runtime, NOT committed (see .gitign
   bin/ffmpeg.exe            # LGPL static build, invoked as an external process
   models/                   # downloaded weights (Hugging Face cache)
 unreal/Content/Python/platecraft_import.py, platecraft_ui.py, init_unreal.py
+tools/build_technical_pdf.py  # TECHNICAL.md -> TECHNICAL.pdf (headless Chrome/Edge; PDF not committed)
 ```
 
 ## Models and licenses (must be respected in code)

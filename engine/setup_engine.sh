@@ -26,7 +26,7 @@ DR_SHA=0f3e2dc435032ecbad654c2fc2153df85384b138
 DR_INVERSE_REV=41f63abccfb764b2516ff85b98af529c2662e2df     # nvidia/Diffusion_Renderer_Inverse_Cosmos_7B
 DR_TOKENIZER_REV=b6af495317c76f287a4131e9299936b1533f5f9f   # nvidia/Cosmos-Tokenize1-CV8x8x8-720p
 TE_VERSION=1.12.0
-CORE_PACKAGES=("numpy<2" "opencv-python>=4.9,<5" "pillow>=10" "OpenEXR>=3.2,<4" "tqdm" "huggingface-hub>=0.30")
+CORE_PACKAGES=("numpy<2" "opencv-python>=4.9,<5" "pillow>=10" "OpenEXR>=3.2,<4" "tqdm" "huggingface-hub>=0.30" "markdown>=3.5")
 
 ENGINE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 IS_WSL=0

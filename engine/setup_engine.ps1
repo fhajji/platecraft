@@ -71,7 +71,7 @@ $UvUrl     = 'https://github.com/astral-sh/uv/releases/latest/download/uv-x86_64
 $FfmpegUrl = 'https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-lgpl.zip'
 
 # Packages per environment. torch/torchvision come from the PyTorch CUDA index first.
-$CorePackages = @('numpy<2', 'opencv-python>=4.9,<5', 'pillow>=10', 'OpenEXR>=3.2,<4', 'tqdm', 'huggingface-hub>=0.30')
+$CorePackages = @('numpy<2', 'opencv-python>=4.9,<5', 'pillow>=10', 'OpenEXR>=3.2,<4', 'tqdm', 'huggingface-hub>=0.30', 'markdown>=3.5')
 $EnvPackages = @{
     'normalcrafter' = @('numpy==1.26.4', 'diffusers==0.29.1', 'transformers==4.41.2', 'accelerate==0.30.1',
                         'huggingface-hub==0.30.1', 'tokenizers==0.19.1', 'safetensors>=0.4', 'einops>=0.8',
