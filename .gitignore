@@ -1,0 +1,26 @@
+# Engine: everything is downloaded by engine/setup_engine.ps1
+engine/*
+!engine/setup_engine.ps1
+!engine/README.md
+!engine/setup_engine.sh
+
+# Working data and results
+work/
+out/
+*.mp4
+*.mov
+*.exr
+
+# Generated documents
+TECHNICAL.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
