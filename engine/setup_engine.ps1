@@ -131,11 +131,27 @@ function Expand-Zip([string]$Zip, [string]$Dest) {
 
 function Get-EnvPython([string]$Name) { Join-Path $EnvsDir "$Name\Scripts\python.exe" }
 
+# A venv records its base Python as an absolute path (pyvenv.cfg "home", and inside uv's
+# Scripts\python.exe launcher). After the PlateCraft folder is moved or renamed, rebuild the
+# venv around its installed packages; console-script .exe files still hold the old path, but
+# PlateCraft only runs "python -m".
+function Repair-PyEnv([string]$EnvDir) {
+    $cfg = Join-Path $EnvDir 'pyvenv.cfg'
+    if (-not (Test-Path $cfg)) { return }
+    $homeLine = Get-Content $cfg | Where-Object { $_ -match '^\s*home\s*=' } | Select-Object -First 1
+    if (-not $homeLine) { return }
+    $oldHome = ($homeLine -split '=', 2)[1].Trim()
+    if ($oldHome.StartsWith($env:UV_PYTHON_INSTALL_DIR, [StringComparison]::OrdinalIgnoreCase)) { return }
+    Invoke-Checked $Uv @('venv', $EnvDir, '--python', $PythonVersion, '--seed', '--allow-existing')
+    Write-Ok "repaired moved environment $(Split-Path $EnvDir -Leaf) (was $oldHome)"
+}
+
 function New-PyEnv {
     param([string]$Name, [string[]]$Packages, [switch]$WithTorch)
     $envDir = Join-Path $EnvsDir $Name
     $py = Get-EnvPython $Name
     if ($Force -and (Test-Path $envDir)) { Remove-Item -Recurse -Force $envDir }
+    Repair-PyEnv $envDir
     if (-not (Test-Path $py)) {
         Invoke-Checked $Uv @('venv', $envDir, '--python', $PythonVersion, '--seed')
     }
@@ -232,7 +248,8 @@ if ($Force -or -not (Test-Path $Uv)) {
 Write-Ok (& $Uv --version)
 
 Write-Step "Portable Python $PythonVersion"
-Invoke-Checked $Uv @('python', 'install', $PythonVersion)
+# --no-bin: keep python3.x.exe out of ~\.local\bin (nothing system-wide).
+Invoke-Checked $Uv @('python', 'install', $PythonVersion, '--no-bin')
 
 # ----------------------------------------------------------------- ffmpeg --
 
